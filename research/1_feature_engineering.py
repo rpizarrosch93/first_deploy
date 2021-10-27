@@ -34,6 +34,7 @@ target_variable = 'SalePrice'
 data = data.drop(['Id'], axis=1)
 
 
+
 def split_data_train_test(data, test_size_param, random_state_param):
     X_train, X_test, y_train, y_test = train_test_split(
         data.drop([target_variable], axis=1),  # predictive variables
@@ -60,7 +61,7 @@ categorical_vars_with_na_frequent = ['MasVnrType',
                                 'BsmtCond',
                                 'BsmtExposure',
                                 'BsmtFinType1',
-                                'BsmtFinType2',#
+                                'BsmtFinType2',
                                 'Electrical',
                                 'GarageType',
                                 'GarageFinish',
@@ -142,3 +143,19 @@ var = 'Fence'
 
 X_train[var] = X_train[var].map(fence_mappings)
 X_test[var] = X_test[var].map(fence_mappings)
+
+
+# Remove rare Labels
+
+# capture all quality variables
+
+qual_vars  = qual_vars + finish_vars + ['BsmtExposure','GarageFinish','Fence']
+
+# capture the remaining categorical variables
+# (those that we did not re-map)
+
+cat_others = [
+    var for var in cat_vars if var not in qual_vars
+]
+
+len(cat_others)
